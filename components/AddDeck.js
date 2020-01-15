@@ -12,22 +12,21 @@ import { purple, white } from "../utils/colors";
 export default function AddDeck(props) {
   const [name, onChangeName] = React.useState("");
 
-  // do we need state or can we just use the event?
   const onNameSubmit = () => {
-    createDeck(name)
-      .then(props.onAdd(name))
-    onChangeName("")
+    createDeck(name).
+      then(onChangeName("")).
+      then(props.navigation.navigate('DeckList', { ...props.navigation.state.params }))
   }
 
   return (
-    <View>
-      <Text>Deck Name:</Text>
+    <View style={styles.container}>
+      <Text style={{ fontSize: 22 }}>Deck Name:</Text>
       <TextInput
-        style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+        style={styles.textInput}
         onChangeText={text => onChangeName(text)}
         value={name} />
       <TouchableOpacity style={styles.submitBtn} disabled={name.length == 0} onPress={() => onNameSubmit()}>
-        <Text style={styles.submitBtnText}>Add Deck</Text>
+        <Text style={styles.submitBtnText}>Create Deck</Text>
       </TouchableOpacity>
     </View>
   );
@@ -41,7 +40,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   submitBtn: {
-    alignSelf: 'flex-end',
     alignItems: 'center',
     backgroundColor: purple,
     borderRadius: 2,
@@ -56,4 +54,11 @@ const styles = StyleSheet.create({
     fontSize: 22,
     textAlign: 'center',
   },
+  textInput: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    width: 200, 
+    margin: 20
+  }
 })

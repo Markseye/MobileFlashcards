@@ -7,37 +7,36 @@ import {
   TouchableOpacity
 } from "react-native";
 import { addCard, generateUID } from "../utils/api";
+import { purple, white } from "../utils/colors";
 
 export default function AddCard(props) {
   const [question, onChangeQuestion] = React.useState('Type Question Here');
   const [answer, onChangeAnswer] = React.useState('Type Answer Here');
+  const deckName = props.navigation.state.params.name
 
-  // do we need state or can we just use the event?
-  onQuestionSubmit = (event) => {
-    card_id = generateUID()
-    card = { [card_id]: {
-               question,
-               answer,
-    }}
-    // get deck from props
-    // addCard({ this.props.deck, card })
-    console.log("save state of question here")
+  const onQuestionSubmit = (event) => {
+    const card = { question,
+                   answer }
+    addCard(deckName, card)
+      .then(() => {
+        props.navigation.navigate('DeckDetails', { ...props.navigation.state.params });
+      })
   }
 
   return (
     <View style={styles.container}>
-      <Text>Question: </Text>
+      <Text style={styles.deckTitleText}>Question: </Text>
       <TextInput
-        style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+        style={styles.textInput}
         onChangeText={text => onChangeQuestion(text)}
         value={question} />
-      <Text>Answer: </Text>
+      <Text style={styles.deckTitleText}>Answer: </Text>
       <TextInput
-        style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+        style={styles.textInput}
         onChangeText={text => onChangeAnswer(text)}
         value={answer} />
-      <TouchableOpacity onPress={() => onQuestionSubmit()}>
-        <Text>Add Deck</Text>
+      <TouchableOpacity style={styles.submitBtn} onPress={(e) => onQuestionSubmit()}>
+        <Text style={styles.submitBtnText}>Add Card</Text>
       </TouchableOpacity>
     </View>
   );
@@ -46,7 +45,7 @@ export default function AddCard(props) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#fff',
-    // flex: 1,
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -55,5 +54,30 @@ const styles = StyleSheet.create({
     fontSize: 22,
     textAlign: 'center',
     top: 0,
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  submitBtn: {
+    alignItems: 'center',
+    backgroundColor: purple,
+    borderRadius: 2,
+    height: 45,
+    justifyContent: 'center',
+    padding: 10,
+    width: 200,
+    paddingLeft: 30,
+    paddingRight: 30,
+    marginTop: 40,
+  },
+  submitBtnText: {
+    color: white,
+    fontSize: 22,
+    textAlign: 'center',
+  },
+  textInput: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    width: 200 
   }
 });
