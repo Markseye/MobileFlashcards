@@ -1,5 +1,4 @@
 import { AsyncStorage } from "react-native";
-// import { CALENDAR_STORAGE_KEY, formatCalendarResults } from "./_calendar";
 
 export async function fetchDecks () {
   const keys = await AsyncStorage.getAllKeys();
@@ -8,24 +7,30 @@ export async function fetchDecks () {
   return result.map(req => JSON.parse(req[1]))
 }
 
-export function fetchDeck (deck) {
-  return AsyncStorage.getItem(deck)
+export async function fetchDeck (deck) {
+  const item = await AsyncStorage.getItem(deck)
+
+  return JSON.parse(item)
 }
 
 export async function createDeck (deck_name) {
-  const merged = await AsyncStorage.mergeItem(deck_name, JSON.stringify({name: deck_name, cards: []}))
+  AsyncStorage.mergeItem(deck_name, JSON.stringify({name: deck_name, cards: []}))
   const item = await AsyncStorage.getItem(deck_name)
+
   return item
 }
 
-export function addCard (deck_name, card) {
-  return AsyncStorage.getItem(deck_name)
+export async function addCard (deck_name, card) {
+  const newCard = await AsyncStorage.getItem(deck_name)
     .then((result) => {
       const data = JSON.parse(result)
       data.cards.push(card)
-      
-      AsyncStorage.setItem(deck_name, JSON.stringify(data))
+
+      return AsyncStorage.setItem(deck_name, JSON.stringify(data))
     })
+  const item = await AsyncStorage.getItem(deck_name)
+
+  return JSON.parse(item)
 }
 
 export function removeDeck ({ deck_id }) {

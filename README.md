@@ -5,3 +5,4 @@ Based on the requirements of Udacity's React/React Native Fundamentals course. B
 Clone the project - git clone git@github.com:Markseye/MobileFlashcards.git
 Install the dependencies - npm install
 Start the development server - npm start
+NOTE: You will need to have a simulator and expo install to run this

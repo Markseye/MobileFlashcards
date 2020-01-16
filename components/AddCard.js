@@ -12,14 +12,15 @@ import { purple, white } from "../utils/colors";
 export default function AddCard(props) {
   const [question, onChangeQuestion] = React.useState('Type Question Here');
   const [answer, onChangeAnswer] = React.useState('Type Answer Here');
-  const deckName = props.navigation.state.params.name
+  const deckName = props.navigation.state.params.deck.name
 
   const onQuestionSubmit = (event) => {
+
     const card = { question,
                    answer }
     addCard(deckName, card)
-      .then(() => {
-        props.navigation.navigate('DeckDetails', { ...props.navigation.state.params });
+      .then((result) => {
+        props.navigation.navigate('DeckDetails', { deck: result });
       })
   }
 

@@ -7,6 +7,8 @@ import AddDeck from "./AddDeck";
 import AddCard from "./AddCard";
 import DeckList from "./DeckList";
 import DeckDetails from "./DeckDetails";
+import Quiz from "./Quiz";
+import QuizResults from "./QuizResults";
 
 const TabNavigator = createBottomTabNavigator({
   DeckList: DeckList,
@@ -14,7 +16,7 @@ const TabNavigator = createBottomTabNavigator({
 },
   {
   navigationOptions: {
-    header: null
+    headerShown: false
   },
   tabBarOptions: {
     activeTintColor: Platform.OS === 'ios' ? purple : white,
@@ -46,6 +48,24 @@ const Stack = createStackNavigator({
   },
   AddCard: {
     screen: AddCard,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple
+      }
+    }
+  },
+  Quiz: {
+    screen: Quiz,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple
+      }
+    }
+  },
+  QuizResults: {
+    screen: QuizResults,
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {

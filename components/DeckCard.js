@@ -5,7 +5,7 @@ import { lightPurp } from "../utils/colors";
 export default function DeckCard(props) {
 
   const handlePress = (() => {
-    props.navigation.navigate('DeckDetails', { ...props.deck });
+    props.navigation.navigate('DeckDetails', { deck: props.deck });
   })
 
   return(
